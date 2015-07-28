@@ -8,12 +8,75 @@
 
 import UIKit
 
+protocol GenericType {
+    static func firstGenericSubtype() -> Any
+}
+
+extension Optional: GenericType {
+    static func firstGenericSubtype() -> Any { return T.self }
+}
+
+
+class TestClass: NSObject {
+    var number: NSNumber!
+}
+
+
+class ObjectMap {
+    var propertiesMap: Dictionary<String, PropertyMap> = [:]
+}
+
+class PropertyMap {
+    var type: Any!
+    var name: String!
+//    var innerType : Any! for optionals and arrays
+//    var dictionaryKey: String?
+//    var converter: Any?
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        let k = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123], type: TestClass.self)
+        
+        let object = TestClass()
+        
+        let mirror = reflect(object)
+        
+        mirror.value
+        let type = mirror.valueType
+        mirror.objectIdentifier
+        mirror.count
+        mirror.summary
+        mirror.quickLookObject
+//        mirror.disposition.description
+        
+        
+        mirror[0].0
+        mirror[0].1.value
+        mirror[0].1.valueType
+        
+        
+        mirror[1].0
+        mirror[1].1.value
+        mirror[1].1.valueType
+        
+        
+        mirror[2].0
+        mirror[2].1.value
+        let propertyType = mirror[2].1.valueType
+        let propertyDisposition = mirror[2].1.disposition
+        
+        if propertyDisposition == .Optional,
+            let propertyType = propertyType as? GenericType.Type {
+                propertyType.firstGenericSubtype()
+        }
+
+        
         return true
     }
 }
@@ -21,25 +84,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 class ObjectCreator {
     static var sharedCreator = ObjectCreator()
-    
-    func createObjectWithType(type: Any, fromDictionary:Dictionary<NSObject, AnyObject>) -> Any? {
-    
-        return nil
-    }
-    
-    func createFromSource<T>(source: AnyObject, type:T.Type) -> T? {
-    
-        if let source = source as? Dictionary<NSObject, AnyObject>,
-            let l = self.createObjectWithType(type, fromDictionary: source) as? T {
-                return l
+    //TODO: Dictionary -> Object
+
+    ///  Generic method for generating objects of needed type from source dictionary
+    ///
+    ///  :param: dictionary Source dictionary
+    ///  :param: type       Needed object type, can be nil. If nil needed type must be provided implicitly, like this
+    ///      let k: NSNumber? = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123])
+    ///
+    ///  :returns: Object of needed type or nil (should be rewritten on Swift 2.0)
+    func createFromDictionary<T>(dictionary: Dictionary<String, NSObject>, type: T.Type? = nil) -> T? {
+
+        println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), type: \(T.self)")
+
+        //???: Now can create only subclass of NSObject
+        if let Type = T.self as? NSObject.Type {
+
+            let obj = Type()
+            
+            //???: Added temprorary, because of NSNumber. If you create NSNumber(), new object will have address 0x0, that causes problems. But actually you never  pass NSNumber as Type here
+            if ObjectIdentifier(obj).uintValue == 0 {
+                return nil
+            }
+            
+            let objectMap = self.objectMap(obj)
+            
+            for (key, element) in dictionary {
+                let propertyKey = objectMap.propertiesMap[key]
+            }
+            
+            return obj as? T
         }
+        
         return nil
     }
     
+    func objectMap(object: AnyObject) -> ObjectMap {
+
+        let mirror = reflect(object)
+        
+        for index in 0..<mirror.count {
+            let mirrorElement = mirror[index]
+            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), |\(mirrorElement.0)|, |\(mirrorElement.1)|")
+        }
+        
+        return ObjectMap()
+    }
     
+    func convertValue(value: NSObject, fromType: Any, toType: Any) -> NSObject? {
+        return nil
+    }
     
-    //TODO: словарь -> объект (заложить опциональщину)
-    //TODO: массив словарей -> массив объектов
+    //TODO: Add optional types of propertise handling
+    
+    //TODO: Array of Dictionaries -> Array of Objects
+    
+    //TODO: Array of Any Types -> Array of Needed Types
+    
     //TODO: кастомные конвертеры для пропертей (в т.ч. для дат), сразу заложить конвертирование через замыкание
     //TODO: маппер для пропертей (сложная структура объектов, маппинг через кей-пасс, точное указание ключа и/или имени проперти)
     //TODO: отдельный режим для работы с опциональными типами (если значение не опциональное, оно должно быть смаплено из исходных данных иначе ->  сообщение об ошибке)
