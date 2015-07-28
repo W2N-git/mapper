@@ -49,7 +49,7 @@ extension Array: GenericType {
 
 class TestClass: NSObject {
     var number = 10
-    var string: NSString!
+    var string: NSString?
 }
 
 let object = TestClass()
@@ -79,15 +79,34 @@ let property            = mirror[2].1.value
 let propertyType        = mirror[2].1.valueType
 let propertyDisposition = mirror[2].1.disposition
 
-if let r = property as? GenericType {
-    println(r.firstGenericSubtype())
+func foo(object: Any) {
+
+    if propertyDisposition == .Optional,
+
+        let r = object as? GenericType {
+    
+            let type = r.firstGenericSubtype()
+
+            if let type = type as? NSString.Type {
+            
+                println("property is string")
+            }
+    }
 }
 
-if propertyDisposition == .Optional,
-    let propertyType = propertyType as? GenericType.Type {
-        println(propertyType)
-//        propertyType.firstGenericSubtype()
-}
+var obj: Int?
+foo(obj)
+//foo(property)
+
+
+
+//if propertyDisposition == .Optional,
+//    let r = property as? GenericType {
+//        let type = r.firstGenericSubtype()
+//        if let type = type as? NSString.Type {
+//            println("property is string")
+//        }
+//}
 
 
 

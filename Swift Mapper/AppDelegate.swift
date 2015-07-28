@@ -43,40 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let k = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123], type: TestClass.self)
         
-        let object = TestClass()
-        
-        let mirror = reflect(object)
-        
-        mirror.value
-        let type = mirror.valueType
-        mirror.objectIdentifier
-        mirror.count
-        mirror.summary
-        mirror.quickLookObject
-//        mirror.disposition.description
-        
-        
-        mirror[0].0
-        mirror[0].1.value
-        mirror[0].1.valueType
-        
-        
-        mirror[1].0
-        mirror[1].1.value
-        mirror[1].1.valueType
-        
-        
-        mirror[2].0
-        mirror[2].1.value
-        let propertyType = mirror[2].1.valueType
-        let propertyDisposition = mirror[2].1.disposition
-        
-        if propertyDisposition == .Optional,
-            let propertyType = propertyType as? GenericType.Type {
-                propertyType.firstGenericSubtype()
-        }
-
-        
         return true
     }
 }
