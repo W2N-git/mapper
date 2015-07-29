@@ -10,15 +10,20 @@ import UIKit
 
 protocol GenericType {
     static func firstGenericSubtype() -> Any
+    func firstGenericSubtype() -> Any
 }
 
 extension Optional: GenericType {
     static func firstGenericSubtype() -> Any { return T.self }
+    func firstGenericSubtype() -> Any { return T.self }
 }
 
 
 class TestClass: NSObject {
     var number: NSNumber!
+    var int: Int?
+    var float: Float = 10
+    var object = NSObject()
 }
 
 
@@ -27,8 +32,9 @@ class ObjectMap {
 }
 
 class PropertyMap {
-    var type: Any!
+    var type: Any! // without optionals, e.g. "Optional<Int>" makes "Int" etc.
     var name: String!
+    var isOptional = false
 //    var innerType : Any! for optionals and arrays
 //    var dictionaryKey: String?
 //    var converter: Any?
@@ -41,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-//        let k = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123], type: TestClass.self)
+        let k = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123], type: TestClass.self)
         
         return true
     }
@@ -90,7 +96,21 @@ class ObjectCreator {
         let mirror = reflect(object)
         
         for index in 0..<mirror.count {
-            let mirrorElement = mirror[index]
+            let mirrorElement    = mirror[index]
+            let propertyName     = mirrorElement.0
+            let propertyMirror   = mirrorElement.1
+            let propertyRawType  = propertyMirror.valueType
+            let propertyRawValue = propertyMirror.value
+            
+            let propertyMap = PropertyMap()
+            propertyMap.name = propertyName
+            
+            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), \(propertyRawType)")
+            if let propertyRawType = propertyRawType as? GenericType {
+                println("propertyRawType: \(propertyRawType), T:\(propertyRawType.firstGenericSubtype())")
+            }
+        
+            
             println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), |\(mirrorElement.0)|, |\(mirrorElement.1)|")
         }
         
