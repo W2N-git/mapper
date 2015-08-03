@@ -1,6 +1,47 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+
+
+func normalizedTypeForType(type: Any.Type) -> Any.Type {
+    
+    switch type {
+    case
+    let _ as Bool.Type,
+    let _ as Int.Type,
+    let _ as Float.Type,
+    let _ as Double.Type,
+    let _ as CGFloat.Type:
+        return NSNumber.self
+        
+    case let _ as String.Type:
+        return NSString.self
+        
+    case let type as NSDate.Type:
+        return NSDate.self
+    default:
+        return type
+    }
+}
+
+let date = NSDate()
+reflect(date).valueType
+normalizedTypeForType(reflect(date).valueType)
+
+
+class PropertyMap {
+    var type: Any.Type
+    init(type: Any.Type) {
+        self.type = type
+    }
+}
+
+let pMap = PropertyMap(type: NSClassFromString("NSObject") as! Any.Type)
+
+if let type = pMap.type as? NSObject.Type {
+    let object = type()
+}
+
 //
 //func set(number: Any, inout toNumber:  Any) {
 //    toNumber = number
