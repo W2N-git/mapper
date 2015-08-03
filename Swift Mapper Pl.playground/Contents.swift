@@ -3,6 +3,12 @@
 import UIKit
 
 
+let someObject: Any? = "String"
+
+let propertyName = "property" as NSString
+
+let setterName = "set" + propertyName.substringToIndex(1).uppercaseString + propertyName.substringFromIndex(1) + ":"
+
 func normalizedTypeForType(type: Any.Type) -> Any.Type {
     
     switch type {
@@ -11,7 +17,8 @@ func normalizedTypeForType(type: Any.Type) -> Any.Type {
     let _ as Int.Type,
     let _ as Float.Type,
     let _ as Double.Type,
-    let _ as CGFloat.Type:
+    let _ as CGFloat.Type,
+    let _ as NSNumber.Type:
         return NSNumber.self
         
     case let _ as String.Type:
@@ -24,10 +31,10 @@ func normalizedTypeForType(type: Any.Type) -> Any.Type {
     }
 }
 
-let date = NSDate()
+let date = NSNumber(bool: true)
 reflect(date).valueType
-normalizedTypeForType(reflect(date).valueType)
-
+let tp = normalizedTypeForType(reflect(date).valueType)
+reflect(tp).summary
 
 class PropertyMap {
     var type: Any.Type
@@ -64,12 +71,13 @@ if let type = pMap.type as? NSObject.Type {
 
 
 class NumberClass: NSObject {
-    var number: NSNumber? = 100
+    let number: NSNumber = 100
 }
 
-let numberObj = NumberClass()
-numberObj.number.dynamicType
-numberObj.setValue(666.5, forKey: "number")
+
+//numberObj.number.dynamicType
+//numberObj.setValue(666.5, forKey: "number")
+
 
 
 //let type1: NSObject.Type? = reflect(NSDate()).valueType as? NSObject.Type
@@ -109,6 +117,11 @@ extension MirrorDisposition: Printable {
         }
     }
 }
+
+let numberObj = NumberClass()
+reflect(numberObj)[1].1.quickLookObject//.disposition.description
+
+
 
 protocol GenericType {
     static func firstGenericSubtype() -> Any
