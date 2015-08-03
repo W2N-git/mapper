@@ -1,6 +1,43 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+//
+//func set(number: Any, inout toNumber:  Any) {
+//    toNumber = number
+//}
+//
+//class NumberClass {
+//    var number: Any = 456
+//}
+//
+//var number = 100
+//var otherNumber: AnyObject = 666
+//
+//var numObject = NumberClass()
+//
+//var numObjectPropValue = reflect(numObject)[0].1.value
+//
+//set(number as Any, &numObjectPropValue)
+//numObjectPropValue
+//numObject.number
+
+
+class NumberClass: NSObject {
+    var number: NSNumber? = 100
+}
+
+let numberObj = NumberClass()
+numberObj.number.dynamicType
+numberObj.setValue(666.5, forKey: "number")
+
+
+//let type1: NSObject.Type? = reflect(NSDate()).valueType as? NSObject.Type
+////let type2: AnyClass? = reflect(NSDate()).valueType as? AnyClass
+//let type2: NSObject.Type? = NSDate.self as? NSObject.Type
+//object_getClassName
+//if (type1?.isKindOfClass(type2!) != nil) {
+//    println("")
+//}
 
 extension MirrorDisposition: Printable {
     
@@ -81,23 +118,29 @@ let propertyDisposition = mirror[2].1.disposition
 
 func foo(object: Any) {
 
-    if propertyDisposition == .Optional,
-
+    if reflect(object).disposition == .Optional,
         let r = object as? GenericType {
     
             let type = r.firstGenericSubtype()
 
-            if let type = type as? NSString.Type {
+            if let type = type as? NSDate.Type {
             
-                println("property is string")
+                println("property is date")
             }
+    }
+    
+    let mirror = reflect(object)
+    mirror.valueType
+    if let type = mirror.valueType as? NSNumber.Type {
+        
     }
 }
 
-var obj: Int?
-foo(obj)
+var obj: NSString = NSString(string: "s")//NSNumber(bool: true)
+//foo(obj)
 //foo(property)
 
+//problem with nsnumber, nsdate, nsstring
 
 
 //if propertyDisposition == .Optional,
@@ -110,7 +153,13 @@ foo(obj)
 
 
 
+var array: [NSObject] = ["a", "b", "c"]
+foo(array[2])
 
+var optInt = NSDate(timeIntervalSinceNow: 0)
 
+let optIntType = reflect(optInt).valueType
 
-
+if optIntType is NSDate.Type {
+    println("")
+}
