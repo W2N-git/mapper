@@ -15,26 +15,26 @@ class ObjectCreator {
         
         switch type {
         case
-        let _ as Bool.Type,
-        let _ as Int.Type,
-        let _ as Float.Type,
-        let _ as Double.Type,
-        let _ as CGFloat.Type,
-        let _ as NSNumber.Type:
+        _ as Bool.Type,
+         _ as Int.Type,
+         _ as Float.Type,
+         _ as Double.Type,
+         _ as CGFloat.Type,
+         _ as NSNumber.Type:
             return NSNumber.self
             
         case
-        let _ as String.Type,
-        let _ as NSString.Type:
+         _ as String.Type,
+         _ as NSString.Type:
             return NSString.self
             
-        case let _ as NSDate.Type:
+        case  _ as NSDate.Type:
             return NSDate.self
 
-        case let _ as NSArray.Type:
+        case  _ as NSArray.Type:
             return NSArray.self
         
-        case let _ as NSDictionary.Type:
+        case  _ as NSDictionary.Type:
             return NSDictionary.self
             
         default:
@@ -43,7 +43,7 @@ class ObjectCreator {
     }
     
     func normalizedTypeNameForType(type: Any.Type) -> String {
-        return reflect(self.normalizedTypeForType(type)).summary
+        return Mirror(reflecting: self.normalizedTypeForType(type)).description//reflect(self.normalizedTypeForType(type)).summary
     }
     
     //TODO: Dictionary -> Object
@@ -51,25 +51,25 @@ class ObjectCreator {
     
     ///  Generic method for generating objects of needed type from source dictionary
     ///
-    ///  :param: dictionary Source dictionary
-    ///  :param: type       Needed object type, can be nil. If nil needed type must be provided implicitly, like this
+    ///  - parameter dictionary: Source dictionary
+    ///  - parameter type:       Needed object type, can be nil. If nil needed type must be provided implicitly, like this
     ///      let k: NSNumber? = ObjectCreator.sharedCreator.createFromDictionary(["key" : 123])
     ///
-    ///  :returns: Object of needed type or nil (should be rewritten on Swift 2.0)
+    ///  - returns: Object of needed type or nil (should be rewritten on Swift 2.0)
     func createFromDictionary<T>(dictionary: Dictionary<String, NSObject>, type: T.Type? = nil) -> T? {
         
         //???: Now can create only subclass of NSObject
-        println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), \(T.self)")
+        print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), \(T.self)")
 
         
         if let Type = T.self as? NSArray.Type {
-            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__)")
+            print("FUNC: \(__FUNCTION__), LINE:\(__LINE__)")
         }
         
         if let Type = T.self as? NSObject.Type {
-            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), type: \(T.self)")
+            print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), type: \(T.self)")
             
-            let generetadObject = Type()
+            let generetadObject = Type.init()
             /*
             //???: Added temprorary, because of NSNumber. 
                 If you create NSNumber(), new object will have address 0x0, that causes problems.
@@ -103,8 +103,8 @@ class ObjectCreator {
                     normalizedPropertyType == "NSNumber" &&
                     !(propertyMap.type is NSNumber.Type) {
                         
-                    println("Warning!!! Only NSNumber can be set to non-NSNumber Optional Property, property name:\(propertyName) property type: Optional<\(propertyMap.type)>")
-                    println("If you want optional use NSNumber, or wait for additional functionality")
+                    print("Warning!!! Only NSNumber can be set to non-NSNumber Optional Property, property name:\(propertyName) property type: Optional<\(propertyMap.type)>")
+                    print("If you want optional use NSNumber, or wait for additional functionality")
                     continue
                 }
                 

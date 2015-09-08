@@ -25,8 +25,8 @@ class TypeConverter {
 
 class GenericTypeConverter<FROM, TO>: TypeConverter {
     override func convert(value: Any) -> Any? {
-        println(value)
-        println(FROM.self)
+        print(value)
+        print(FROM.self)
         if let fromValue = value as? FROM,
             let toValue = self.convertingClosure(fromValue) {
                 return toValue

@@ -14,8 +14,8 @@ protocol GenericType {
 }
 
 extension Optional: GenericType {
-    static func firstGenericSubtype() -> Any.Type { return T.self }
-    func firstGenericSubtype() -> Any.Type { return T.self }
+    static func firstGenericSubtype() -> Any.Type { return Wrapped.self }
+    func firstGenericSubtype() -> Any.Type { return Wrapped.self }
 }
 
 extension Array: GenericType {
@@ -41,9 +41,9 @@ extension NSArray : INITABLE {}
 
 
 func foo<T:INITABLE>(type: T.Type? = nil) -> T? {
-    println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), T:\(T.self)")
+    print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), T:\(T.self)")
     let obj = T()
-    println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), obj:\(obj)")
+    print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), obj:\(obj)")
     return obj
 }
 

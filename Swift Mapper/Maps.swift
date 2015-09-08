@@ -12,7 +12,7 @@ class ObjectMap {
     var propertiesMap: Dictionary<String, PropertyMap> = [:]
 }
 
-class PropertyMap: Printable {
+class PropertyMap: CustomStringConvertible {
     var type: Any.Type // without optionals, e.g. "Optional<Int>" makes "Int" etc.
     var name: String
     

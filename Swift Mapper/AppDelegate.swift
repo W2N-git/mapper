@@ -48,8 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            ])
         if var array: Array<String> = foo() {
             array.append("asdf")
-            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), array:\(array)")
-            println("FUNC: \(__FUNCTION__), LINE:\(__LINE__), reflect:\(array.firstGenericSubtype())")
+            print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), array:\(array)")
+            print("FUNC: \(__FUNCTION__), LINE:\(__LINE__), reflect:\(array.firstGenericSubtype())")
         }
         
 
