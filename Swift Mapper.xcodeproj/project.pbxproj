@@ -13,6 +13,10 @@
 		5B959A0D1B66CE63005B8628 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B959A0C1B66CE63005B8628 /* Images.xcassets */; };
 		5B959A101B66CE63005B8628 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B959A0E1B66CE63005B8628 /* LaunchScreen.xib */; };
 		5B959A1C1B66CE63005B8628 /* Swift_MapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B959A1B1B66CE63005B8628 /* Swift_MapperTests.swift */; };
+		F3E632D91B6FD8C50071BA87 /* Aux.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E632D81B6FD8C50071BA87 /* Aux.swift */; };
+		F3E632DB1B6FD8DC0071BA87 /* Converters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E632DA1B6FD8DC0071BA87 /* Converters.swift */; };
+		F3E632DD1B6FD8FB0071BA87 /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E632DC1B6FD8FB0071BA87 /* Maps.swift */; };
+		F3E632DF1B6FD92D0071BA87 /* ObjectCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E632DE1B6FD92D0071BA87 /* ObjectCreator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,10 @@
 		5B959A151B66CE63005B8628 /* Swift MapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift MapperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B959A1A1B66CE63005B8628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B959A1B1B66CE63005B8628 /* Swift_MapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_MapperTests.swift; sourceTree = "<group>"; };
+		F3E632D81B6FD8C50071BA87 /* Aux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aux.swift; sourceTree = "<group>"; };
+		F3E632DA1B6FD8DC0071BA87 /* Converters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Converters.swift; sourceTree = "<group>"; };
+		F3E632DC1B6FD8FB0071BA87 /* Maps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
+		F3E632DE1B6FD92D0071BA87 /* ObjectCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectCreator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +86,10 @@
 			isa = PBXGroup;
 			children = (
 				5B959A051B66CE63005B8628 /* AppDelegate.swift */,
+				F3E632D81B6FD8C50071BA87 /* Aux.swift */,
+				F3E632DE1B6FD92D0071BA87 /* ObjectCreator.swift */,
+				F3E632DA1B6FD8DC0071BA87 /* Converters.swift */,
+				F3E632DC1B6FD8FB0071BA87 /* Maps.swift */,
 				5B959A071B66CE63005B8628 /* ViewController.swift */,
 				5B959A091B66CE63005B8628 /* Main.storyboard */,
 				5B959A0C1B66CE63005B8628 /* Images.xcassets */,
@@ -156,7 +168,9 @@
 		5B9599F81B66CE63005B8628 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Anton Belousov";
 				TargetAttributes = {
 					5B9599FF1B66CE63005B8628 = {
@@ -213,7 +227,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B959A081B66CE63005B8628 /* ViewController.swift in Sources */,
+				F3E632DF1B6FD92D0071BA87 /* ObjectCreator.swift in Sources */,
 				5B959A061B66CE63005B8628 /* AppDelegate.swift in Sources */,
+				F3E632DB1B6FD8DC0071BA87 /* Converters.swift in Sources */,
+				F3E632D91B6FD8C50071BA87 /* Aux.swift in Sources */,
+				F3E632DD1B6FD8FB0071BA87 /* Maps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +294,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -342,6 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Swift Mapper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.novilab-mobile.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -352,6 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Swift Mapper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.novilab-mobile.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -370,6 +391,7 @@
 				);
 				INFOPLIST_FILE = "Swift MapperTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.novilab-mobile.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift Mapper.app/Swift Mapper";
 			};
@@ -385,6 +407,7 @@
 				);
 				INFOPLIST_FILE = "Swift MapperTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.novilab-mobile.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift Mapper.app/Swift Mapper";
 			};
@@ -409,6 +432,7 @@
 				5B959A211B66CE63005B8628 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5B959A221B66CE63005B8628 /* Build configuration list for PBXNativeTarget "Swift MapperTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +441,7 @@
 				5B959A241B66CE63005B8628 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
